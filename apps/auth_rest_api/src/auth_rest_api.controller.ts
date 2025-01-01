@@ -1,4 +1,5 @@
 import { Controller, Get } from '@nestjs/common';
+
 import { AuthRestApiService } from './auth_rest_api.service';
 
 @Controller()

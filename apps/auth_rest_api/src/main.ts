@@ -1,4 +1,5 @@
 import { NestFactory } from '@nestjs/core';
+
 import { AuthRestApiModule } from './auth_rest_api.module';
 
 async function bootstrap() {

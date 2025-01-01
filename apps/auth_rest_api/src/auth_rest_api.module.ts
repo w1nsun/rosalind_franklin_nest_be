@@ -1,4 +1,5 @@
 import { Module } from '@nestjs/common';
+
 import { AuthRestApiController } from './auth_rest_api.controller';
 import { AuthRestApiService } from './auth_rest_api.service';
 

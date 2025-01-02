@@ -17,6 +17,20 @@
     "strictBindCallApply": false,
     "forceConsistentCasingInFileNames": false,
     "noFallthroughCasesInSwitch": false,
-    "paths": {}
+    "strict": true,
+    "paths": {
+      "@config/*": [
+        "config/*"
+      ],
+      "@config": [
+        "config/"
+      ],
+      "@domain/*": [
+        "domain/*"
+      ],
+      "@domain": [
+        "domain/"
+      ],
+    }
   }
 }

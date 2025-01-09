@@ -1,0 +1,86 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["postgresqlExtensions"]
+}
+
+datasource db {
+  provider   = "postgresql"
+  url        = env("DATABASE_URL")
+  extensions = [uuidOssp(map: "uuid-ossp")]
+}
+
+model AuthUser {
+  id        String   @id @default(uuid(7)) @db.Uuid
+  firstName String   @map("first_name") @db.VarChar(128)
+  lastName  String   @map("last_name") @db.VarChar(128)
+  email     String   @unique @map("email") @db.VarChar(255)
+  password  String   @map("password") @db.VarChar(255)
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("auth_users")
+}
+
+model AuthUserContact {
+  id        String   @id @default(uuid(7)) @db.Uuid
+  userId    String   @map("user_id") @db.Uuid
+  isMain    Boolean  @default(false) @map("is_main") @db.Boolean
+  phone     String?  @default(dbgenerated("NULL")) @map("phone") @db.VarChar(32)
+  country   String?  @default(dbgenerated("NULL")) @map("country") @db.VarChar(3)
+  zipCode   String?  @default(dbgenerated("NULL")) @map("zip_code") @db.VarChar(16)
+  address   String?  @default(dbgenerated("NULL")) @map("address") @db.VarChar(255)
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("auth_user_contacts")
+}
+
+model AuthUserRefreshToken {
+  id        String   @id @default(uuid(7)) @db.Uuid
+  userId    String   @map("user_id") @db.Uuid
+  createdAt DateTime @default(now()) @map("created_at")
+  expiresAt DateTime @map("expires_at")
+
+  @@map("auth_user_refresh_tokens")
+}
+
+model AuthEmployee {
+  id        String   @id @default(uuid(7)) @db.Uuid
+  orgId     String   @map("org_id") @db.Uuid
+  roleId    String   @map("role_id") @db.Uuid
+  firstName String   @map("first_name") @db.VarChar(128)
+  lastName  String   @map("last_name") @db.VarChar(128)
+  email     String   @map("email") @db.VarChar(255)
+  password  String   @map("password") @db.VarChar(255)
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@unique([orgId, email], name: "employee_unique")
+  @@map("auth_employees")
+}
+
+model AuthEmployeeRole {
+  id          String   @id @default(uuid(7)) @db.Uuid
+  orgId       String   @map("org_id") @db.Uuid
+  title       String   @map("title") @db.VarChar(128)
+  permissions Json     @default("{}") @map("permissions")
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @updatedAt @map("updated_at")
+
+  @@map("auth_employe_roles")
+}
+
+model AuthEmployeeRefreshToken {
+  id        String   @id @default(uuid(7)) @db.Uuid
+  userId    String   @map("user_id") @db.Uuid
+  createdAt DateTime @default(now()) @map("created_at")
+  expiresAt DateTime @map("expires_at")
+
+  @@map("auth_employee_refresh_tokens")
+}

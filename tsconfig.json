@@ -12,7 +12,7 @@
     "baseUrl": "./",
     "incremental": true,
     "skipLibCheck": true,
-    "strictNullChecks": false,
+    "strictNullChecks": true,
     "noImplicitAny": false,
     "strictBindCallApply": false,
     "forceConsistentCasingInFileNames": false,
@@ -31,6 +31,18 @@
       "@domain": [
         "domain/"
       ],
+      "@app/main-db-client": [
+        "libs/main-db-client/src"
+      ],
+      "@app/main-db-client/*": [
+        "libs/main-db-client/src/*"
+      ],
+      "@app/basic-auth": [
+        "libs/basic-auth/src"
+      ],
+      "@app/basic-auth/*": [
+        "libs/basic-auth/src/*"
+      ]
     }
   }
 }
